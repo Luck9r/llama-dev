@@ -1,0 +1,27 @@
+services:
+#  web:
+#    container_name: llama-web
+#    build:
+#      context: ../llama-app
+#      args:
+#        build_env: development
+#    ports:
+#      - "80:80"
+  backend:
+    container_name: llama-backend
+    build: ../llama-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    platform: linux/x86_64
+    environment:
+      - POSTGRES_PASSWORD=admin
+    container_name: llama-postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
